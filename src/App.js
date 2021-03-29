@@ -1,52 +1,81 @@
 import logo from './logo.svg';
 import './App.css';
-import { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const products =[
-  {name:'Photography (20GB)', price: '$9.99'},
-  {name:'All Apps', price: '$52.99'},
-  {name:'Acrobat Pro', price: '$14.99'},
+const products = [
+  { name: 'Photoshop', price: 'US$20.99 /mo' },
+  { name: 'Premiere Pro', price: 'US$20.99/mo' },
+  { name: 'Illustrator', price: 'US$20.99/mo' },
+  { name: 'InDesign', price: 'US$20.99/mo' },
+  { name: 'Design', price: 'US$20.99/mo' },
+  { name: 'Jowel321', price: 'US$500.99/mo' },
+
 ]
+
+
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* <Display name="Casual Back Pack" price="$34"></Display>
-        <Display name="Casual Shoe Mens" price="$24"></Display>
-        <Display name="Casual Shoe Girls" price="$14"></Display>
-        <Display name="Casual Shirts Mens" price="$54"></Display> */}
-        {/* <Product name={products[0].name} price={products[0].price}></Product>
-        <Product name={products[1].name} price={products[1].price}></Product> */}
-        <Product product ={products[0]}></Product>
-        <Product product ={products[1]}></Product>
-        <Product product ={products[2]}></Product>
+
+      <Counter></Counter>
+      <Users></Users>
+      {products.map(product => <Product product={product}></Product>)}
+
+
+
       </header>
     </div>
   );
 }
 
-function Product(props){
-  const productStyle= {
-    border:'1px solid gray',
-    backgroundColor:'#FFFFFF',
-    width:'200px',
-    height:'200px',
-    color:'#000',
-    borderRadius:'5px',
-    margin:'5px',
-    padding:'5px',
-    float:'left'
+function Users (){
+  const [users, setUsers] = useState([])
+  useEffect(()=>{
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then (res => res.json())
+    .then (data => {
+      setUsers(data);
+
+    })
+  })
+  return (
+    <div>
+      <h4>Dynamic users:{users.length}</h4>
+      {users.map (user => <h4> Name: {user.name} <p>Email: {user.email}</p></h4>)}
+    </div>
+  )
+}
+
+function Counter (){
+  const [count, setCount] = useState(1)
+  const handleDecrease = () => setCount(count-1)
+  const handleIncrease = () => setCount(count+1)
+  return (
+    <div>
+      <h5>Count:{count}</h5>
+      <button onClick={handleDecrease}>Decrease</button>
+      <button onClick={handleIncrease}>Increase</button>
+    </div>
+  )
+}
 
 
+function Product (props){
+  const productStyle = {
+    width: '250px',
+    height: '250px',
+    backgroundColor: '#F1f1f1',
+    color: '#000',
+    borderRadius: '5px',
+    margin: '5px'
   }
-  console.log(props);
-  return(
+  return (
     <div style={productStyle}>
-      {/* <h6>{props.name}</h6>
-      <h5>{props.price}</h5> */}
-      <h6>{props.product.name}</h6>
-      <h5>{props.product.price}</h5>
+      <h5>{props.product.name}</h5>
+      <h4>{props.product.price}</h4>
       <button>Buy now</button>
     </div>
   )
@@ -54,18 +83,99 @@ function Product(props){
 
 
 
-// function Display(props) {
-//   const cssClass ={
-//     borderRadius:'10px',
-//     backgroundColor: 'gray',
-//     color:'black',
-//     margin:'10px',
-//     padding:'10px',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function Users (){
+//   const [users, setUsers] = useState([])
+//   useEffect(()=>{
+//     fetch ('https://jsonplaceholder.typicode.com/users')
+//     .then (res => res.json())
+//     .then (data =>{
+//       setUsers(data);
+//       // console.log(data);
+//     })
+//   })
+//   return (
+//     <div>
+//       <h3>Dynamic User:{users.length}</h3>
+//       {users.map( user => <p>Name:{user.name} Email: {user.email}</p>)}
+//     </div>
+//   )
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function Counter(){
+//   const [count, setCount] = useState(10);
+//   const handleIncrease= () =>{
+//     const newCount = count +1;
+//     setCount(newCount);
 //   }
 //   return (
-//     <div style={cssClass}>
-//       <h1>{props.name}</h1>
-//       <h3>{props.price}</h3>
+//     <div>
+//       <h2>Count:{count}</h2>
+//       <button onClick={handleIncrease}>Increase</button>
 //     </div>
 //   )
 // }
